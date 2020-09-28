@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<odoo>
+   <data>
+
+    <record id="view_account_invoices_tree" model="ir.ui.view">
+         <field name="name">account.invoices.tree</field>
+         <field name="model">account.move</field>
+         <field name="arch" type="xml">
+            <tree>
+		<field name="invoice_date" string="Fecha factura"/>
+		<field name="partner_id" string="Cliente"/>
+		<field name="vat" string="CUIT"/>
+		<field name="l10n_latam_document_type_id" />
+		<field name="responsibility_type_id" />
+		<field name="name" />
+		<field name="print_vat_amount_untaxed" />
+		<field name="print_vat_amount_tax" />
+		<field name="print_vat_amount_total" />
+		<field name="state" optional="hide"/>
+            </tree>
+         </field>
+    </record>
+
+
+
+        <record id="action_account_invoice_tree" model="ir.actions.act_window">
+            <field name="name">Facturas IVA</field>
+            <field name="res_model">account.move</field>
+	    <field name="view_mode">tree,form</field>
+	    <field name="domain">[('type','in',('out_invoice','out_refund')),('journal_id.afip_ws','=','wsfe'),('state','=','posted')]</field>
+	    <field name="view_id" ref="view_account_invoices_tree"></field>
+        </record>
+
+        <menuitem id="menu_account_invoice_tree"
+		action="action_account_invoice_tree"
+                parent="account.menu_finance_receivables"
+                sequence="100"/>
+
+
+       </data>
+</odoo>
+
